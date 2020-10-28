@@ -1,0 +1,19 @@
+body{
+    padding: 200px 800px;
+}
+
+.answer ol li:hover{
+    background-color: lightblue;
+    font-size: x-large;
+}
+
+.answer ol li{
+    margin: 20px;
+    font-size: large;
+}
+
+.question p{
+    border: 1px black solid;
+    padding: 75px 50px;
+    font-size: x-large;
+}
