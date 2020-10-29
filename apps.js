@@ -1,5 +1,6 @@
 const xhr = new XMLHttpRequest();
-
+// getting the json files 
+// this method deparated recommaned to do this asynctricly  for better user experince 
 xhr.open('GET', './Apprentice_TandemFor400_Data.json', false);
 xhr.send();
 
@@ -8,6 +9,11 @@ const questionList = JSON.parse(xhr.responseText);
 // gets a random set of unique numbers
 // meaning there is no repeats
 
+// this will generate a unique list of number
+// maxLength meaning what is the largest possible number you want
+// max is how many random numbers you want 
+// for example if my maxLength is 10 my largest random number will be 10
+// and if my max is 4 this will return 4 numbers
 const randomQuestion = (maxLength, max ) =>{
     const question = [];
     while(question.length < max){
@@ -16,24 +22,29 @@ const randomQuestion = (maxLength, max ) =>{
     } 
     return question
 }
-
+let correct = 0;
 let currentQuestion  = 0; 
 let randomQuestionList = [];
 let multiple = [];
 
 randomQuestionList = randomQuestion(questionList.length, 20)
-console.log(randomQuestionList)
+
+
+// grads all the answer and adds a event listener  to each the answer 
 const selectAnswer = () =>{
     const addEvent = document.querySelectorAll('.answer ol li ');
-    console.log('clicking')
+
     addEvent.forEach(element => {
         element.addEventListener('click' , ()=>{
            if(element.textContent === questionList[randomQuestionList[currentQuestion]].correct){
                alert('correct')
+               correct++;
                deleteQuestion();
            }
            else{
-               alert('incorrect')
+               alert(`                         incorret
+         correct answer: ${questionList[randomQuestionList[currentQuestion]].correct}
+               `)
                deleteQuestion();
            }
 
@@ -42,11 +53,17 @@ const selectAnswer = () =>{
 
 }
 
+// this will get a random question from the list 
+// this will also randomise the answer order
+
 
 const createQuestion = () =>{
     
     if(currentQuestion === 10){
-        return alert('done')
+        return alert(`
+            Done 
+            number question anwsered correctly:${correct}
+        `)
     }
 
     for(let i = 0; i< 3; i++){
@@ -56,11 +73,12 @@ const createQuestion = () =>{
 
     const question = randomQuestion(4,4);
 
-    // console.log(json_object[random[0]]);
+
     // makes the qustion
     // gets the multiple chose 
 
     // get the question and adds to the dom
+    // it will also have the answer be slected 
     const questionArea = document.querySelector('.question');
     const questionMultiple  = document.querySelector('.answer');
     const questionMultipleAnswer = document.createElement('ol');
@@ -81,6 +99,9 @@ const createQuestion = () =>{
     }
    selectAnswer()
 }
+
+// gets rid of the question and answser and will
+//  create  a random question with the createQuestion
 const deleteQuestion = () =>{
 
     const questionContainer = document.querySelector('.question');
